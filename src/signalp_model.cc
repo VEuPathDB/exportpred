@@ -19,6 +19,7 @@
 // CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "predict_pexel.hh"
+#include <vector>
 
 std::pair<std::string, std::string> makeSignalPModel(GHMM::ModelBuilder &mb, GHMM::UTIL::Alphabet::Ptr &alphabet) {
   GHMM::UTIL::EmissionDistributionParser::Ptr ep = new GHMM::UTIL::EmissionDistributionParser(alphabet);
@@ -84,21 +85,40 @@ std::pair<std::string, std::string> makeSignalPModel(GHMM::ModelBuilder &mb, GHM
     S:0.0832117 T:0.0493584 V:0.0492212 W:0.00964942 Y:0.0202909"));
 
   MATH::DPDF::Ptr h1_dpdf = new MATH::DPDF();
-  h1_dpdf->setDistrib(6, 19, (double[]){
-                        6.54977e-16,
-                          3.7347e-12,
-                          1.71429e-05,
-                          0.00274341,
-                          0.000951411,
-                          0.00769368,
-                          0.231647,
-                          0.220435,
-                          0.155337,
-                          0.157697,
-                          0.222918,
-                          0.000560533,
-                          1.92736e-08
-                          });
+  std::vector<double> distrib = {
+    6.54977e-16,
+    3.7347e-12,
+    1.71429e-05,
+    0.00274341,
+    0.000951411,
+    0.00769368,
+    0.231647,
+    0.220435,
+    0.155337,
+    0.157697,
+    0.222918,
+    0.000560533,
+    1.92736e-08
+  };
+  h1_dpdf->setDistrib(6, 19, distrib.data());
+
+
+
+  // h1_dpdf->setDistrib(6, 19, (double[]){
+  //                       6.54977e-16,
+  //                         3.7347e-12,
+  //                         1.71429e-05,
+  //                         0.00274341,
+  //                         0.000951411,
+  //                         0.00769368,
+  //                         0.231647,
+  //                         0.220435,
+  //                         0.155337,
+  //                         0.157697,
+  //                         0.222918,
+  //                         0.000560533,
+  //                         1.92736e-08
+  //                         });
 
   GHMM::LENGTH::Discrete::Ptr h1_length = new GHMM::LENGTH::Discrete(h1_dpdf);
 
